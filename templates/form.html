@@ -2,13 +2,12 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Marque Sua Presença</title>
+<title>Cadastro</title>
 
 <style>
 body {
-    font-family: Arial;
-    background: #0f172a;
-    color: white;
+    background: #0f1b2d;
+    font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,91 +15,102 @@ body {
 }
 
 .container {
-    background: #1e293b;
+    background: #1e2a3a;
     padding: 30px;
-    border-radius: 15px;
-    width: 300px;
+    border-radius: 20px;
+    width: 320px;
+    text-align: center;
+    color: white;
+}
+
+h1 {
+    margin-bottom: 20px;
 }
 
 input {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin: 8px 0;
-    border-radius: 8px;
+    border-radius: 10px;
     border: none;
-    text-transform: uppercase;
+    background: #eee;
 }
 
 button {
     width: 100%;
-    padding: 12px;
-    background: #22c55e;
+    padding: 15px;
+    background: #2ecc71;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     color: white;
     font-weight: bold;
     cursor: pointer;
+    margin-top: 10px;
 }
 
-.sucesso {
-    position: fixed;
-    top: 20px;
-    background: #22c55e;
-    padding: 15px;
-    border-radius: 10px;
-    animation: aparecer 0.5s ease;
+.radio-group {
+    text-align: left;
+    margin-top: 10px;
 }
 
-@keyframes aparecer {
-    from {opacity: 0; transform: translateY(-20px);}
-    to {opacity: 1; transform: translateY(0);}
+.success {
+    display: none;
+    font-size: 18px;
+    margin-top: 20px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
 </style>
 
 </head>
 <body>
 
-{% if sucesso %}
-<div class="sucesso">
-    ✅ CADASTRO REALIZADO COM SUCESSO!
-</div>
-{% endif %}
-
 <div class="container">
-    <h2>Marque Sua Presença</h2>
 
-    <form action="/submit" method="POST">
+    <h1>Marque sua presença</h1>
 
-        <input type="text" name="nome" placeholder="NOME COMPLETO" required>
+    <form id="form">
 
-        <input type="text" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
+        <input type="text" placeholder="Nome completo" required>
+        <input type="text" placeholder="(00) 00000-0000" required>
+        <input type="text" placeholder="Cidade" required>
+        <input type="text" placeholder="Bairro" required>
 
-        <input type="text" name="cidade" placeholder="CIDADE" required>
-
-        <input type="text" name="bairro" placeholder="BAIRRO" required>
+        <div class="radio-group">
+            <p>Quer fazer parte do grupo oficial?</p>
+            <label><input type="radio" name="grupo" required> Sim</label><br>
+            <label><input type="radio" name="grupo"> Não</label>
+        </div>
 
         <button type="submit">CADASTRAR</button>
 
     </form>
+
+    <div class="success" id="msg">
+        🎉 Cadastro realizado com sucesso! 🎉
+    </div>
+
 </div>
 
+<!-- Biblioteca de fogos -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 <script>
-// MÁSCARA TELEFONE
-document.getElementById('telefone').addEventListener('input', function(e) {
-    let x = e.target.value.replace(/\D/g, '').substring(0,11);
-    let formatted = x;
+document.getElementById("form").addEventListener("submit", function(e) {
+    e.preventDefault();
 
-    if (x.length > 0) {
-        formatted = '(' + x.substring(0,2);
-    }
-    if (x.length >= 3) {
-        formatted += ') ' + x.substring(2,7);
-    }
-    if (x.length >= 8) {
-        formatted += '-' + x.substring(7,11);
-    }
+    document.getElementById("msg").style.display = "block";
 
-    e.target.value = formatted;
+    // Fogos 🎆
+    confetti({
+        particleCount: 150,
+        spread: 100,
+        origin: { y: 0.6 }
+    });
 });
 </script>
 
