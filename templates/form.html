@@ -14,7 +14,7 @@ body {
     height: 100vh;
 }
 
-/* Caixa principal */
+/* Container */
 .container {
     background: #1e2a3a;
     padding: 30px;
@@ -22,7 +22,7 @@ body {
     width: 340px;
     text-align: center;
     color: white;
-    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
 }
 
 /* Logo */
@@ -33,7 +33,7 @@ body {
 
 /* Título */
 h1 {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
     text-transform: uppercase;
     margin-bottom: 20px;
@@ -47,13 +47,29 @@ input {
     border-radius: 10px;
     border: none;
     background: #eee;
+    text-transform: uppercase;
 }
 
 /* Radio */
 .radio-group {
     text-align: left;
-    margin-top: 10px;
-    font-size: 14px;
+    margin-top: 15px;
+}
+
+.radio-group p {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.radio-option input {
+    transform: scale(1.2);
 }
 
 /* Botão */
@@ -72,6 +88,26 @@ button {
 
 button:hover {
     transform: scale(1.05);
+}
+
+/* Loading */
+.loading {
+    display: none;
+    margin-top: 15px;
+}
+
+.spinner {
+    width: 30px;
+    height: 30px;
+    border: 4px solid #fff;
+    border-top: 4px solid #2ecc71;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: auto;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
 }
 
 /* Mensagem */
@@ -93,7 +129,7 @@ button:hover {
 
 <div class="container">
 
-    <!-- LOGO (troca pelo seu link) -->
+    <!-- LOGO -->
     <img src="https://via.placeholder.com/80" class="logo">
 
     <h1>🔥 MARQUE SUA PRESENÇA</h1>
@@ -106,17 +142,32 @@ button:hover {
         <input type="text" placeholder="Bairro" required>
 
         <div class="radio-group">
-            <p>Quer fazer parte do grupo oficial?</p>
-            <label><input type="radio" name="grupo" required> Sim</label><br>
-            <label><input type="radio" name="grupo"> Não</label>
+            <p>QUER FAZER PARTE DO GRUPO OFICIAL?</p>
+
+            <div class="radio-option">
+                <input type="radio" name="grupo" value="SIM" required>
+                <label>SIM</label>
+            </div>
+
+            <div class="radio-option">
+                <input type="radio" name="grupo" value="NAO">
+                <label>NÃO</label>
+            </div>
         </div>
 
-        <button type="submit">CONFIRMAR PRESENÇA</button>
+        <button type="submit" id="btn">CONFIRMAR PRESENÇA</button>
 
     </form>
 
+    <!-- Loading -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>ENVIANDO...</p>
+    </div>
+
+    <!-- Mensagem -->
     <div class="success" id="msg">
-        🎉 Presença confirmada com sucesso! 🎉
+        🎉 PRESENÇA CONFIRMADA COM SUCESSO! 🎉
     </div>
 
 </div>
@@ -125,16 +176,31 @@ button:hover {
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
+// MAIÚSCULO AUTOMÁTICO
+document.querySelectorAll("input").forEach(input => {
+    input.addEventListener("input", function() {
+        this.value = this.value.toUpperCase();
+    });
+});
+
+// SUBMIT COM LOADING + ANIMAÇÃO
 document.getElementById("form").addEventListener("submit", function(e) {
     e.preventDefault();
 
-    document.getElementById("msg").style.display = "block";
+    document.getElementById("btn").style.display = "none";
+    document.getElementById("loading").style.display = "block";
 
-    confetti({
-        particleCount: 200,
-        spread: 120,
-        origin: { y: 0.6 }
-    });
+    setTimeout(() => {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("msg").style.display = "block";
+
+        confetti({
+            particleCount: 200,
+            spread: 120,
+            origin: { y: 0.6 }
+        });
+
+    }, 2000);
 });
 </script>
 
