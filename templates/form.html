@@ -2,11 +2,11 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Cadastro</title>
+<title>Marque sua presença</title>
 
 <style>
 body {
-    background: #0f1b2d;
+    background: linear-gradient(135deg, #0f1b2d, #1e3c72);
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -14,19 +14,32 @@ body {
     height: 100vh;
 }
 
+/* Caixa principal */
 .container {
     background: #1e2a3a;
     padding: 30px;
     border-radius: 20px;
-    width: 320px;
+    width: 340px;
     text-align: center;
     color: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
 }
 
+/* Logo */
+.logo {
+    width: 80px;
+    margin-bottom: 10px;
+}
+
+/* Título */
 h1 {
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
     margin-bottom: 20px;
 }
 
+/* Inputs */
 input {
     width: 100%;
     padding: 12px;
@@ -36,23 +49,32 @@ input {
     background: #eee;
 }
 
+/* Radio */
+.radio-group {
+    text-align: left;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* Botão */
 button {
     width: 100%;
     padding: 15px;
-    background: #2ecc71;
+    background: linear-gradient(45deg, #2ecc71, #27ae60);
     border: none;
     border-radius: 12px;
     color: white;
     font-weight: bold;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 15px;
+    transition: 0.3s;
 }
 
-.radio-group {
-    text-align: left;
-    margin-top: 10px;
+button:hover {
+    transform: scale(1.05);
 }
 
+/* Mensagem */
 .success {
     display: none;
     font-size: 18px;
@@ -71,7 +93,10 @@ button {
 
 <div class="container">
 
-    <h1>Marque sua presença</h1>
+    <!-- LOGO (troca pelo seu link) -->
+    <img src="https://via.placeholder.com/80" class="logo">
+
+    <h1>🔥 MARQUE SUA PRESENÇA</h1>
 
     <form id="form">
 
@@ -86,17 +111,17 @@ button {
             <label><input type="radio" name="grupo"> Não</label>
         </div>
 
-        <button type="submit">CADASTRAR</button>
+        <button type="submit">CONFIRMAR PRESENÇA</button>
 
     </form>
 
     <div class="success" id="msg">
-        🎉 Cadastro realizado com sucesso! 🎉
+        🎉 Presença confirmada com sucesso! 🎉
     </div>
 
 </div>
 
-<!-- Biblioteca de fogos -->
+<!-- Fogos -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
@@ -105,10 +130,9 @@ document.getElementById("form").addEventListener("submit", function(e) {
 
     document.getElementById("msg").style.display = "block";
 
-    // Fogos 🎆
     confetti({
-        particleCount: 150,
-        spread: 100,
+        particleCount: 200,
+        spread: 120,
         origin: { y: 0.6 }
     });
 });
