@@ -50,26 +50,36 @@ input {
     text-transform: uppercase;
 }
 
-/* Radio */
+/* RADIO BONITO */
 .radio-group {
-    text-align: left;
-    margin-top: 15px;
+    margin-top: 20px;
+    text-align: center;
 }
 
 .radio-group p {
-    margin-bottom: 10px;
     font-weight: bold;
+    margin-bottom: 15px;
 }
 
 .radio-option {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
+    background: #2a3b52;
+    padding: 12px 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .radio-option input {
-    transform: scale(1.2);
+    transform: scale(1.3);
+}
+
+.radio-option label {
+    flex: 1;
+    text-align: right;
+    font-weight: bold;
 }
 
 /* Botão */
@@ -129,7 +139,6 @@ button:hover {
 
 <div class="container">
 
-    <!-- LOGO -->
     <img src="https://via.placeholder.com/80" class="logo">
 
     <h1>🔥 MARQUE SUA PRESENÇA</h1>
@@ -137,21 +146,23 @@ button:hover {
     <form id="form">
 
         <input type="text" placeholder="Nome completo" required>
-        <input type="text" placeholder="(00) 00000-0000" required>
+
+        <input type="tel" id="telefone" placeholder="(00) 00000-0000" maxlength="15" required>
+
         <input type="text" placeholder="Cidade" required>
         <input type="text" placeholder="Bairro" required>
 
         <div class="radio-group">
             <p>QUER FAZER PARTE DO GRUPO OFICIAL?</p>
 
-            <div class="radio-option">
+            <div class="radio-option" onclick="this.querySelector('input').checked=true">
+                <span>SIM</span>
                 <input type="radio" name="grupo" value="SIM" required>
-                <label>SIM</label>
             </div>
 
-            <div class="radio-option">
+            <div class="radio-option" onclick="this.querySelector('input').checked=true">
+                <span>NÃO</span>
                 <input type="radio" name="grupo" value="NAO">
-                <label>NÃO</label>
             </div>
         </div>
 
@@ -159,20 +170,17 @@ button:hover {
 
     </form>
 
-    <!-- Loading -->
     <div class="loading" id="loading">
         <div class="spinner"></div>
         <p>ENVIANDO...</p>
     </div>
 
-    <!-- Mensagem -->
     <div class="success" id="msg">
         🎉 PRESENÇA CONFIRMADA COM SUCESSO! 🎉
     </div>
 
 </div>
 
-<!-- Fogos -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
@@ -183,7 +191,24 @@ document.querySelectorAll("input").forEach(input => {
     });
 });
 
-// SUBMIT COM LOADING + ANIMAÇÃO
+// MÁSCARA TELEFONE
+document.getElementById("telefone").addEventListener("input", function(e) {
+    let v = e.target.value.replace(/\D/g, "");
+
+    if (v.length > 11) v = v.slice(0, 11);
+
+    if (v.length > 6) {
+        v = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+    } else if (v.length > 2) {
+        v = `(${v.slice(0,2)}) ${v.slice(2)}`;
+    } else if (v.length > 0) {
+        v = `(${v}`;
+    }
+
+    e.target.value = v;
+});
+
+// SUBMIT
 document.getElementById("form").addEventListener("submit", function(e) {
     e.preventDefault();
 
