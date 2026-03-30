@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Cadastro</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background: #1e293b;
+    padding: 30px;
+    border-radius: 15px;
+    width: 300px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: none;
+    text-transform: uppercase;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #22c55e;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.sucesso {
+    position: fixed;
+    top: 20px;
+    background: #22c55e;
+    padding: 15px;
+    border-radius: 10px;
+    animation: aparecer 0.5s ease;
+}
+
+@keyframes aparecer {
+    from {opacity: 0; transform: translateY(-20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+</style>
+
+</head>
+<body>
+
+{% if sucesso %}
+<div class="sucesso">
+    ✅ CADASTRO REALIZADO COM SUCESSO!
+</div>
+{% endif %}
+
+<div class="container">
+    <h2>CADASTRO</h2>
+
+    <form action="/submit" method="POST">
+
+        <input type="text" name="nome" placeholder="NOME COMPLETO" required>
+
+        <input type="text" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
+
+        <input type="text" name="cidade" placeholder="CIDADE" required>
+
+        <input type="text" name="bairro" placeholder="BAIRRO" required>
+
+        <button type="submit">CADASTRAR</button>
+
+    </form>
+</div>
+
+<script>
+// MÁSCARA TELEFONE
+document.getElementById('telefone').addEventListener('input', function(e) {
+    let x = e.target.value.replace(/\D/g, '').substring(0,11);
+    let formatted = x;
+
+    if (x.length > 0) {
+        formatted = '(' + x.substring(0,2);
+    }
+    if (x.length >= 3) {
+        formatted += ') ' + x.substring(2,7);
+    }
+    if (x.length >= 8) {
+        formatted += '-' + x.substring(7,11);
+    }
+
+    e.target.value = formatted;
+});
+</script>
+
+</body>
+</html>
